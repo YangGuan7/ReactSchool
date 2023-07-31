@@ -59,12 +59,24 @@
 
             // #3 Async function 錯誤處理
 
-            (async () => {
-              const res = await axios.get(
-                "https://jsonplaceholder.typicode.com/todos/"
-              );
-              console.log(res);
-            })();
+            const asyncFn = async () => {
+              try {
+                const res = await axios.get(
+                  "https://jsonplaceholder.typicode.com/godos/"
+                );
+                return res;
+              } catch (error) {
+                throw error;
+              }
+            };
+            asyncFn()
+              .then((res) => {
+                console.log("Promise:", res);
+              })
+              .catch((error) => {
+                console.log("Promise Error:", error);
+              });
+
             // async Function 與 React
             const App = () => {
               const [data, setData] = React.useState({});
