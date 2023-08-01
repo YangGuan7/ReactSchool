@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>巢狀元件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <script src="/javascripts/vendor.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"
+      integrity="sha512-1/8Tj23BRrWnKZXeBruk6wTnsMJbi/lJsk9bsRgVwb6j5q39n0A00gFjbCTaDo5l5XrPVv4DZXftrJExhRF/Ug=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body class="bg-lighter">
+    <div class="container main my-5">
+      <div class="row">
+        <main class="col post">
+          <!-- 章節標題 -->
+          <div class="mb-4">
+            <h1 class="mt-0 text-muted">巢狀元件</h1>
+            <small>檔名：<code>nestComponent.html</code></small>
+          </div>
+          <!-- 🔥🔥練習開始🔥🔥 -->
+          <div id="root"></div>
+          <script type="text/babel">
+            const PrimaryButton = ({ className, callToAction }) => {
+              return (
+                <button type="button" className="btn btn-primary">
+                  {callToAction}
+                </button>
+              );
+            };
+            const Card = ({
+              marketLoca,
+              marketName,
+              boothStartDate,
+              boothEndDate,
+              boothStartTime,
+              boothEndTime,
+              marketIntroduce,
+              marketImage,
+            }) => {
+              return (
+                <>
+                  <span class="marketCard">
+                    <span class="marketCardText ${marketLoca === '高雄 · Kaohsiung' ? 'marletKHHLight' : marketLoca === '嘉義 · Chiayi' ? 'marletCYILight' : marketLoca === '台南 · Tainan' ? 'marletTNNLight' : marketLoca === '屏東 · Pingtung' ? 'marletPIFLight'}">
+                      <span class="marketCardLoca ${marketLoca === '高雄 · Kaohsiung' ? 'marletKHH' : marketLoca === '嘉義 · Chiayi' ? 'marletCYI' : marketLoca === '台南 · Tainan' ? 'marletTNN' : marketLoca === '屏東 · Pingtung' ? 'marletPIF'}">
+                        {marketLoca}
+                      </span>
+                      <span class="marketCardTitle">{marketName}</span>
+                      <span class="marketCardTime">
+                        {boothStartDate}~{boothEndDate}
+                      </span>
+                      <span class="marketCardTime">
+                        {boothStartTime}~{boothEndTime}
+                      </span>
+                      <span class="marketCardP">{marketIntroduce}</span>
+
+                      <a href="" class="marketButton">
+                        <div class="marketButtonP">更多市集活動資訊</div>
+                      </a>
+                    </span>
+                    <span class="marketCardImg">
+                      <img src={marketImage} alt="" />
+                    </span>
+                  </span>
+                </>
+              );
+            };
+
+            const App = () => {
+              const data = [
+                {
+                  marketId: 1,
+                  marketName: "療癒計畫｜花草嗅覺派對",
+                  marketSlogan:
+                    "重新建立與自然、土地的連結，重新建構自我的休憩地，重回春意的懷抱。",
+                  marketLoca: "高雄 · Kaohsiung",
+                  marketLocation: "高雄衛武營都會公園",
+                  marketCoordinate: [22.62112718010002, 120.34035151140256],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "10:00",
+                  boothEndTime: "17:00",
+                  marketIntroduce:
+                    "療癒計畫｜花草嗅覺派對將為您帶來一場與自然共鳴的療癒體驗。您可以參與花草香氛工作坊，學習製作芳療產品，參觀花園展覽，享受自然環境中的放鬆氛圍。此外，還有舞台表演、親子活動和美食攤位。",
+                  boothCount: "30",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage01.jpg",
+                },
+                {
+                  marketId: 2,
+                  marketName: "ZOO．動物派對",
+                  marketImage: "marketImage02.jpg",
+                  marketSlogan:
+                    "「設計與動物的奇幻邂逅，高雄期待回歸」——獨特創意，與動物共同遨遊。",
+                  marketLoca: "高雄 · Kaohsiung",
+                  marketLocation: "高雄壽山動物園",
+                  marketCoordinate: [22.635669717983518, 120.27544495207835],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "09:00",
+                  boothEndTime: "17:00",
+                  marketIntroduce:
+                    "這個動物園市集結合了設計元素，將展示各種創意設計和與動物相關的商品。參觀者可以購買獨特的動物主題產品，品嚐美食，參與設計工作坊，還有現場音樂表演和動物互動體驗。",
+                  boothCount: "25",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage02.jpg",
+                },
+                {
+                  marketId: 3,
+                  marketName: "海風嘉年華",
+                  marketImage: "marketImage03.jpg",
+                  marketSlogan:
+                    "迎著微風走在市集，海風溫柔輕拂臉龐。炎炎夏日，一起感受打狗港的風，享受一場手作、飲食、表演交織的嘉",
+                  marketLoca: "高雄 · Kaohsiung",
+                  marketLocation: "高雄駁二藝術特區大義倉庫",
+                  marketCoordinate: [22.618491251909134, 120.284741866699465],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "10:00",
+                  boothEndTime: "20:00",
+                  marketIntroduce:
+                    "海風嘉年華將在高雄打狗港舉行，帶給您一場充滿活力和樂趣的市集體驗。您可以逛遍手作市集，尋找獨特的手工藝品和設計商品，品味各式美食攤位帶來的美味佳餚。同時，現場還有精彩的表演節目，包括音樂演出、舞蹈表演和藝術展覽，讓您沉浸在藝術和娛樂的氛圍中。",
+                  boothCount: "40",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage03.jpg",
+                },
+                {
+                  marketId: 4,
+                  marketName: "舊物盛典",
+                  marketImage: "marketImage04.jpg",
+                  marketSlogan:
+                    "穿越時光的復古手工市集，探索昔日的美好。尋找獨特的古董寶物、復古時尚和文化遺產，讓復古魅力重現於高雄",
+                  marketLoca: "高雄 · Kaohsiung",
+                  marketLocation: "高雄市立美術館",
+                  marketCoordinate: [22.657060811487252, 120.28663880983135],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "14:00",
+                  boothEndTime: "20:00",
+                  marketIntroduce:
+                    "這個復古手工市集將展示復古風格的手工藝品、古董物品和二手商品。你可以在這裡找到各種獨特的復古時尚、家居裝飾品和文化遺產物品。另外還有現場音樂表演和復古造型工作坊。",
+                  boothCount: "40",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage04.jpg",
+                },
+                {
+                  marketId: 5,
+                  marketName: "健康生活市集",
+                  marketImage: "marketImage05.jpg",
+                  marketSlogan:
+                    "探索身心的完美平衡。參與瑜伽、健身課程，品味健康美食，尋找全方位的福祉，讓健康從健康中心開始！",
+                  marketLoca: "高雄 · Kaohsiung",
+                  marketLocation: "高雄市立內惟藝術中心",
+                  marketCoordinate: [22.657310887973747, 120.28229255955502],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "10:00",
+                  boothEndTime: "17:00",
+                  marketIntroduce:
+                    "這個健康生活市集將聚焦於身心健康和全面福祉。你可以參加瑜伽和健身示範課程，品嚐健康食品和飲料，並參觀各種健康產品攤位。還有健康講座和檢測服務提供。",
+                  boothCount: "20",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage05.jpg",
+                },
+                {
+                  marketId: 6,
+                  marketName: "SUMMER夏日手作市集",
+                  marketImage: "marketImage06.jpg",
+                  marketSlogan:
+                    "創意交織，心靈的共鳴。在手作文創市集，遇見獨特的手工藝品、插畫和文具，探索創意的無限可能！",
+                  marketLoca: "台南 · Tainan",
+                  marketLocation: "台南藍晒圖文創園區",
+                  marketCoordinate: [22.98765403676278, 120.19725905619268],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "09:00",
+                  boothEndTime: "17:00",
+                  marketIntroduce:
+                    "這個手作文創市集將展示各種獨特的手工藝品、文具、插畫和設計作品。參觀者可以購買創意禮品，參與工作坊，體驗手作藝術的樂趣。",
+                  boothCount: "20",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage06.jpg",
+                },
+                {
+                  marketId: 7,
+                  marketName: "府城甜食祭",
+                  marketImage: "marketImage07.jpg",
+                  marketSlogan:
+                    "你是嗜甜如命的螞蟻人嗎？誠摯邀請你一起參與這場令人垂涎三尺的甜食慶典",
+                  marketLoca: "台南 · Tainan",
+                  marketLocation: "台南公園",
+                  marketCoordinate: [23.00289817459953, 120.21175080837675],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "13:00",
+                  boothEndTime: "20:00",
+                  marketIntroduce:
+                    "府城甜食祭將在台南舉行，讓您盡情享受甜蜜的美食盛宴。這場慶典將匯聚各式各樣的甜點，包括蛋糕、餅乾、布丁、冰淇淋等，滿足您對甜食的渴望。您可以品嚐到來自台南及其他地區的特色甜點，並與其他甜食愛好者交流分享。此外，還有甜點比賽、烹飪示範和美食攤位，帶給您一場甜蜜又美味的活動體驗。",
+                  boothCount: "30",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage07.jpg",
+                },
+                {
+                  marketId: 8,
+                  marketName: "盛夏・微光市集",
+                  marketImage: "marketImage08.jpg",
+                  marketSlogan:
+                    "在這裡挑選一份小驚喜，送給自己或是心上人，感受夏日的的浪漫，悠閒逛著各式獨特品牌，一起度過甜蜜蜜好時",
+                  marketLoca: "台南 · Tainan",
+                  marketLocation: "台南市美術館2館",
+                  marketCoordinate: [22.990631771851486, 120.20136612325523],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "10:00",
+                  boothEndTime: "19:00",
+                  marketIntroduce:
+                    "盛夏・微光市集將在台南舉行，為您帶來一場充滿浪漫與驚喜的夏日體驗。這個市集聚集了各種獨特的品牌和手工藝人，讓您可以尋找一份小驚喜，無論是給自己還是心上人。在這裡，您可以悠閒逛著，品味不同的品牌和設計作品，感受夏日的浪漫氛圍。除了獨特商品的選購，還有美食攤位、手作工坊和現場音樂表演等活動。",
+                  boothCount: "30",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage08.jpg",
+                },
+                {
+                  marketId: 9,
+                  marketName: "夏之戀・遊牧田野趣",
+                  marketImage: "marketImage09.jpg",
+                  marketSlogan:
+                    "鳳梨田埂邊的夏季農夫小學市集，野餐及散步的網美景點，一同漫步在懶人小徑上，度過悠閒的遊牧時",
+                  marketLoca: "屏東 · Pingtung",
+                  marketLocation: "屏東縣職人町",
+                  marketCoordinate: [22.672627115263918, 120.49473803200361],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "09:00",
+                  boothEndTime: "18:00",
+                  marketIntroduce:
+                    "夏之戀・遊牧田野趣市集將在屏東舉行，帶給您一場獨特的夏季農夫小學市集體驗。這個市集位於鳳梨田埂邊，是一個充滿網美景點的野餐和散步勝地。您可以在懶人小徑上漫步，欣賞美麗的田野風景，感受遊牧般的悠閒時光。市集內有各式各樣的農產品和手工藝品供您選購，您可以品嚐當地的新鮮水果、農產品，也可以尋找獨特的手作禮品。",
+                  boothCount: "20",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage09.jpg",
+                },
+                {
+                  marketId: 10,
+                  marketName: "炎夏冰涼祭",
+                  marketImage: "marketImage10.jpg",
+                  marketSlogan:
+                    "一場與夏日炎炎對抗的冰涼盛宴，市集中各樣選品小物、冰涼飲品、甜點及冰鎮美食，可說是極致的享受呀～",
+                  marketLoca: "屏東 · Pingtung",
+                  marketLocation: "屏東勝利星村創意生活園區",
+                  marketCoordinate: [22.67874166963039, 120.48448726557099],
+                  boothStartDate: "2023-09-09",
+                  boothEndDate: "2023-09-10",
+                  boothStartTime: "10:00",
+                  boothEndTime: "17:00",
+                  marketIntroduce:
+                    "炎夏冰涼祭將在屏東舉行，為您帶來一場與夏日炎炎對抗的冰涼盛宴。這個市集匯集了各式各樣的選品小物、冰涼飲品、甜點和冰鎮美食，給您帶來極致的享受。您可以在市集中尋找獨特的商品和手工藝品，品嚐各種冰涼飲品和甜點，享受冰鎮美食的美味。此外，現場還有精彩的表演節目和活動，包括音樂演出、冰品製作示範和遊戲互動等，讓您在炎炎夏日中感受到清涼和歡樂。",
+                  boothCount: "30",
+                  boothDescription: `◈本場次 [ 可明火 ] ，食品類攤商請準備防油防火地墊
+    　本場次 [ 無供電 ] ，食品類品牌可自備發電機及延長線使用
+    　本場次 [ 可原地包攤、寄放設備 ] ，但市集與活動場地方不負保管責任
+    
+    ◈入場時請自行至市集服務處或跟工作人員領取租借設備
+    　若不會組裝可詢問現場工作人員
+    　並於當周品牌參與最後一天自行歸還設備
+    　將傘及租借硬體歸還至指定位置
+
+    ◈租借設備
+    　勾選租借硬體設備者
+    　於市集開始當周
+    　無法再做取消租借`,
+                  boothDeadline: "2023-09-06 00:00",
+                  boothImage: "boothImage10.jpg",
+                },
+              ];
+
+              return (
+                <>
+                  <h2>月月送菜到你家</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Tempore molestiae facere asperiores sit aspernatur
+                    laboriosam ipsum, excepturi fuga, consequuntur cupiditate,
+                    nam a doloremque error adipisci nulla reiciendis itaque odio
+                    voluptatibus.
+                  </p>
+
+                  {data.map((data) => {
+                    return (
+                      <Card
+                        key={data.marketId}
+                        marketLoca={data.marketLoca}
+                        marketName={data.marketName}
+                        boothStartDate={data.boothStartDate}
+                        boothEndDate={data.boothEndDate}
+                        boothStartTime={data.boothStartTime}
+                        boothEndTime={data.boothEndTime}
+                        marketIntroduce={data.marketIntroduce}
+                        marketImage={data.marketImage}
+                      ></Card>
+                    );
+                  })}
+                </>
+              );
+            };
+
+            ReactDOM.createRoot(document.getElementById("root")).render(
+              <App />
+            );
+          </script>
+          <!-- 🙇🙇練習結束🙇🙇 -->
+        </main>
+
+        <aside class="col-md-3">
+          <div class="sticky-top" style="top: 76px">
+            <div class="list-group">
+              <a
+                href="/components/intro.html"
+                class="list-group-item list-group-item-action"
+              >
+                為什麼要用元件
+              </a>
+
+              <a
+                href="/components/createLayout.html"
+                class="list-group-item list-group-item-action"
+              >
+                版型建立
+              </a>
+
+              <a
+                href="/components/createComponent.html"
+                class="list-group-item list-group-item-action"
+              >
+                建立元件
+              </a>
+
+              <a
+                href="/components/propsDestructuring.html"
+                class="list-group-item list-group-item-action"
+              >
+                資料解構
+              </a>
+
+              <a
+                href="/components/dataMap.html"
+                class="list-group-item list-group-item-action"
+              >
+                使用資料驅動元件
+              </a>
+
+              <a
+                href="/components/mapKey.html"
+                class="list-group-item list-group-item-action"
+              >
+                為什麼要使用 key 值
+              </a>
+
+              <a
+                href="/components/nestComponent.html"
+                class="list-group-item list-group-item-action active"
+              >
+                巢狀元件
+              </a>
+
+              <a
+                href="/components/componentFinal.html"
+                class="list-group-item list-group-item-action"
+              >
+                元件章節挑戰
+              </a>
+            </div>
+            <div class="mt-3 text-end p-2 bg-light rounded">
+              <small class="text-black-50 fw-light mb-0"
+                >文件版本：2022/10/31</small
+              >
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-secondary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">React 練習手冊</a>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/intro/createApp.html">認識 React</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/es6/shorthand.html">JS 必備觀念</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/components/intro.html"
+                >元件基礎</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hooks/startHooks.html">Hooks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/form/basicForm.html">表單</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hooksAdv/lifeCycle.html">Hooks 進階</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <footer class="footer py-2 bg-light">
+      <div class="container text-center">
+        <small class="text-black-50 fw-light mb-0"
+          >六角學院 React 課程專屬文件</small
+        >
+      </div>
+    </footer>
+    <link rel="stylesheet" href="/stylesheets/all.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+  </body>
+</html>
